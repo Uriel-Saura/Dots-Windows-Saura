@@ -1,0 +1,365 @@
+:root {
+
+    /* Color Palette made with paywall a current wallpaper*/
+    --color0: #19130b;
+    --color1: #534831;
+    --color2: #614C25;
+    --color3: #695531;
+    --color4: #343A44;
+    --color5: #685F4B;
+    --color6: #896432;
+    --color7: #c5c4c2;
+    --color8: #6e655a;
+    --color9: #534831;
+    --color10: #614C25;
+    --color11: #695531;
+    --color12: #343A44;
+    --color13: #685F4B;
+    --color14: #896432;
+    --color15: #c5c4c2;
+    --background: #19130bad;
+    --foreground: #c5c4c2;
+    --cursor: #c5c4c2;
+}
+
+/* Global Styles */
+
+* {
+    font-size: 12px;
+    color: var(--foreground);
+    font-weight: 600;
+    font-family: "JetBrains Mono", monospace;
+    margin: 0;
+    padding: 0;
+}
+
+/* Widget Zone Styles  */
+.widget {
+    padding: 10px 14px;
+    margin: 0;
+    background-color: var(--background);
+    margin: 0 4px;
+    border-radius: 16px;
+}
+
+/* Home widget Styles */
+/* https://docs.yasb.dev/latest/widgets/home*/
+.home-widget .icon {
+    color: var(--foreground);
+}
+.home-widget .icon:hover {
+    color: var(--color6);
+}
+.home-menu {
+    background-color: var(--background); 
+    border-radius: 12px;
+}
+.home-menu .menu-item {
+    padding: 6px 48px 7px 16px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--foreground); 
+    font-weight: 600;
+}
+.home-menu .menu-item:hover {
+    background-color: var(--color9);
+    color: var(--color6);
+}
+.home-menu .separator {
+    max-height: 1px;
+    background-color: var(--color8);
+}
+
+
+
+/* GlazeWM Workspaces Styles */
+/* https://docs.yasb.dev/latest/widgets/glazewm-workspaces*/
+.glazewm-workspaces .offline-status {
+    color: var(--foreground);
+    padding: 0;
+}
+.glazewm-workspaces .ws-btn {
+    border: none;
+    background-color: var(--background);
+    margin: 0 4px;
+    font-size: 0px;
+    color: transparent;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+}
+.glazewm-workspaces .ws-btn:hover {
+    background-color: var(--color9);
+}
+.glazewm-workspaces .ws-btn.populated {
+    background-color: var(--color11);
+}
+.glazewm-workspaces .ws-btn.active_populated,
+.glazewm-workspaces .ws-btn.active_empty {
+    color: transparent;
+    background-color: var(--color1);
+    width: 36px;
+    max-width: 36px;
+    height: 12px;
+}
+
+
+/* Taskbar Styles */
+/* https://docs.yasb.dev/latest/widgets/taskbar*/
+.taskbar-widget {
+    padding: 6px;
+    margin: 0;
+}
+.taskbar-widget .app-container {
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius:12px;
+}
+
+.taskbar-widget .app-container.foreground {
+    background-color: var(--color9);
+} 
+
+/* Active window indicator */
+/* https://docs.yasb.dev/latest/widgets/active-windows-title*/
+.active-window-widget .widget-container {
+    padding: 4px;
+}
+.active-window-widget .widget-container .label {
+    padding-left: 6px;
+    color: var(--foreground);
+}
+
+
+/* Systray Styles */
+/* https://docs.yasb.dev/latest/widgets/systray*/
+.systray .pinned-container {
+    background: var(--background);
+}
+.systray .button {
+    border-radius: 4px;
+    padding: 2px 2px;
+}
+.systray .button[dragging=true] {
+    background: var(--background);
+    border-color: var(--color2);
+}
+
+.systray .unpinned-visibility-btn {
+    border-radius: 4px;
+    height: 20px;
+    width: 16px;
+}
+.systray .unpinned-visibility-btn:hover {
+    border: 1px solid var(--color2);
+    border-radius: 4px;
+    border-color: var(--color2);
+}
+
+/*Volume widget styles*/
+/* https://docs.yasb.dev/latest/widgets/volume*/
+.volume-widget .icon {
+    color: var(--color3);
+    margin:0 2px 0 0;
+}
+.audio-menu {
+    background-color:var(--background); 
+    min-width: 300px;
+}
+/* System volume */
+.audio-menu .system-volume-container .volume-slider {
+    border: none;
+}
+/* Device list styles */
+.audio-menu .audio-container .device {
+    background-color: var(--background);
+    border: none;
+    padding:6px 8px 6px 4px;
+    margin: 2px 0;
+    font-size: 12px;
+    border-radius: 4px;
+}
+.audio-menu .audio-container .device.selected {
+    background-color: var(--background);
+
+}
+.audio-menu .audio-container .device:hover {
+    background-color: var(--color9);
+}
+/* Toggle button for application volumes (if is enabled) */
+.audio-menu .toggle-apps {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-height: 24px;
+    min-width: 24px;
+    border-radius: 4px;
+}
+.audio-menu .toggle-apps.expanded {
+    background-color: var(--background);
+}
+.audio-menu .toggle-apps:hover {
+    background-color: var(--color9);
+
+}
+/* Container for application volumes (if is enabled) */
+.audio-menu .apps-container {
+    padding: 8px;
+    margin-top:20px;
+    border-radius: 8px;
+    background-color:var(--background);
+}
+.audio-menu .apps-container .app-volume .app-icon-container {
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 6px;
+    margin-right: 8px;
+}
+.audio-menu .apps-container .app-volume .app-slider {
+    min-height: 40px;
+    max-height: 40px;
+}
+.audio-menu .apps-container .app-volume .app-icon-container:hover {
+    background-color: var(--color9);
+} 
+
+/* Weather widget styles*/
+/* https://docs.yasb.dev/latest/widgets/weather*/
+/* Weather card style */
+.weather-card {
+    background-color: var(--background);
+}
+.weather-card-today {
+    border: 1px solid var(--color8);
+    border-radius: 8px;
+    background-color: var(--background);
+}
+.weather-card-today .label {
+    font-size: 12px;
+    color: var(--foreground);
+}
+.weather-card-today .label.location {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--foreground);
+}
+.weather-card-today .label.alert {
+    font-size: 12px;
+    font-weight: 700;
+    background-color: var(--background);
+    border: 1px solid var(--color3);
+    color: var(--color3);
+    border-radius: 6px;
+    padding: 5px 0;
+}
+.weather-card-day {
+    border: 1px solid var(--color8);
+    border-radius: 8px;
+    background-color: var(--background);
+}
+
+.weather-card-day.active {
+    background-color: var(--background);
+    border: 1px solid var(--color5);
+}
+
+.weather-card-day:hover {
+    background-color: var(--background);
+}
+
+.weather-card-day .label {
+    font-size: 12px;
+    color: var(--foreground);
+}
+
+.weather-card .hourly-container {
+    border: 1px solid var(--color8);
+    background-color: var(--background);
+    border-radius: 8px;
+    min-height: 150px;
+}
+
+.weather-card .hourly-data {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--foreground);
+}
+
+.weather-card .hourly-data.temperature {
+    background-color: var(--color3);
+}
+
+/* Wallpapers widget styles*/
+/* https://docs.yasb.dev/latest/widgets/wallpapers*/
+.wallpapers-gallery-window {
+    background-color: var(--background);
+    border: 0;
+    margin: 0;
+}
+.wallpapers-gallery-buttons {
+    background-color: transparent;
+    color: var(--foreground);
+    border: none;
+    font-size: 14px;
+    padding: 8px 0;
+    border-radius: 8px;
+    margin:0 8px 8px 8px;
+    width: 600px;
+}
+.wallpapers-gallery-buttons:hover {
+    background-color: var(--color9);
+}
+.wallpapers-gallery-image {
+    border: 4px solid transparent;
+    border-radius: 10px;
+}
+.wallpapers-gallery-image:hover {
+    border: 4px solid var(--color8);
+}
+.wallpapers-gallery-image.focused {
+    border: 4px solid var(--color5);
+}
+
+/*Clock widget styles*/
+/* https://docs.yasb.dev/latest/widgets/clock*/
+.calendar {
+    background-color: var(--background);
+}
+.calendar .calendar-table,
+.calendar .calendar-table::item {
+    background-color: transparent;
+    color: var(--foreground);
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+.calendar .calendar-table::item:selected {
+    color: var(--color0);
+    background-color: var(--color9);
+    border-radius: 10px;
+}
+.calendar .day-label {
+    margin-top: 20px;
+}
+.calendar .day-label,
+.calendar .month-label,
+.calendar .date-label {
+    font-size: 16px;
+    color: var(--foreground);
+    font-weight: 700;
+    min-width: 180px;
+    max-width: 180px;
+}
+.calendar .month-label {
+    font-weight: normal;
+}
+.calendar .date-label {
+    font-size: 88px;
+    font-weight: 900;
+    color: var(--foreground);
+    margin-top: -20px;
+}
