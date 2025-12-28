@@ -1,0 +1,170 @@
+/**
+ * @name midnight (paywall)
+ * @description A custom theme based on the paywall palette.
+ * @author Saulieth
+ * @version 1.0.1
+ */
+
+/* import theme modules */
+@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+    /* font */
+    --font: 'Inter';
+    --code-font: '';
+    font-weight: 400;
+
+    /* sizes */
+    --gap: 12px;
+    --divider-thickness: 4px;
+    --border-thickness: 1px;
+
+    /* animations */
+    --animations: on;
+    --list-item-transition: 0.2s ease;
+    --dms-icon-svg-transition: 0.4s ease;
+    --border-hover-transition: 0.2s ease;
+
+    /* top bar */
+    --top-bar-height: var(--gap);
+    --top-bar-button-position: titlebar;
+    --top-bar-title-position: off;
+    --subtle-top-bar-title: off;
+
+    /* window controls */
+    --custom-window-controls: on;
+    --window-control-size: 14px;
+
+    /* dms button */
+    --custom-dms-icon: custom;
+    --dms-icon-svg-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 27' width='24' height='24'%3E%3Cpath fill='currentColor' d='M0 0h7v1H6v1H5v1H4v1H3v1H2v1h5v1H0V6h1V5h1V4h1V3h1V2h1V1H0m13 2h5v1h-1v1h-1v1h-1v1h3v1h-5V7h1V6h1V5h1V4h-3m8 5h1v5h1v-1h1v1h-1v1h1v-1h1v1h-1v3h-1v1h-2v1h-1v1h1v-1h2v-1h1v2h-1v1h-2v1h-1v-1h-1v1h-6v-1h-1v-1h-1v-2h1v1h2v1h3v1h1v-1h-1v-1h-3v-1h-4v-4h1v-2h1v-1h1v-1h1v2h1v1h1v-1h1v1h-1v1h2v-2h1v-2h1v-1h1M8 14h2v1H9v4h1v2h1v1h1v1h1v1h4v1h-6v-1H5v-1H4v-5h1v-1h1v-2h2m17 3h1v3h-1v1h-1v1h-1v2h-2v-2h2v-1h1v-1h1m1 0h1v3h-1v1h-2v-1h1v-1h1'%3E%3C/path%3E%3C/svg%3E");
+    --dms-icon-svg-size: 90%;
+    --dms-icon-color-before: var(--icon-secondary);
+    --dms-icon-color-after: var(--white);
+    --custom-dms-background: off;
+
+    /* background image */
+    --background-image: off;
+    --background-image-url: url('');
+
+    /* transparency */
+    --transparency-tweaks: off;
+    --remove-bg-layer: off;
+    --panel-blur: off;
+    --blur-amount: 12px;
+    --bg-floating: var(--bg-3);
+
+    /* chatbar */
+    --custom-chatbar: off;
+    --chatbar-height: 47px;
+
+    /* other */
+    --small-user-panel: on;
+}
+
+:root {
+    /* Color Palette made with paywall a current wallpaper*/
+    --color0: #0f1a22;
+    --color1: #467992;
+    --color2: #38849B;
+    --color3: #3A8AA9;
+    --color4: #4894B1;
+    --color5: #6194A9;
+    --color6: #50A5C4;
+    --color7: #c3c5c7;
+    --color8: #5e6a73;
+    --color9: #467992;
+    --color10: #38849B;
+    --color11: #3A8AA9;
+    --color12: #4894B1;
+    --color13: #6194A9;
+    --color14: #50A5C4;
+    --color15: #c3c5c7;
+    --background: #0f1a22ad;
+    --foreground: #c3c5c7;
+    --cursor: #c3c5c7;
+
+    --colors: on;
+
+    /* text colors */
+    --text-0: var(--bg-4); /* Inverse text */
+    --text-1: var(--color15); /* Brightest text */
+    --text-2: var(--color7); /* Headings */
+    --text-3: var(--foreground); /* Normal text */
+    --text-4: var(--color8); /* Muted text/Icons */
+    --text-5: color-mix(in srgb, var(--color8), transparent 50%); /* Very muted */
+
+    /* background and dark colors */
+    --bg-1: var(--color8); /* Dark buttons when clicked */
+    --bg-2: color-mix(in srgb, var(--background), var(--color8) 25%); /* Dark buttons */
+    --bg-3: color-mix(in srgb, var(--background), var(--color8) 15%); /* Spacing/Secondary */
+    --bg-4: var(--background); /* Main background */
+    
+    --hover: color-mix(in srgb, var(--color4), transparent 80%); /* Using Blue slot for hover */
+    --active: color-mix(in srgb, var(--color4), transparent 60%);
+    --active-2: color-mix(in srgb, var(--color4), transparent 40%);
+    --message-hover: hsla(0, 0%, 0%, 0.1);
+
+    /* accent colors */
+    --accent-1: var(--color4); /* Links (Blue slot) */
+    --accent-2: var(--color6); /* Small accents (Cyan slot) */
+    --accent-3: var(--color5); /* Buttons (Magenta slot) */
+    --accent-4: color-mix(in srgb, var(--color5), white 10%);
+    --accent-5: color-mix(in srgb, var(--color5), black 10%);
+    --accent-new: var(--color1); /* Important (Red slot) */
+    
+    --mention: linear-gradient(to right, color-mix(in srgb, var(--color1), transparent 90%) 40%, transparent);
+    --mention-hover: linear-gradient(to right, color-mix(in srgb, var(--color1), transparent 95%) 40%, transparent);
+    --reply: linear-gradient(to right, color-mix(in srgb, var(--color4), transparent 90%) 40%, transparent);
+    --reply-hover: linear-gradient(to right, color-mix(in srgb, var(--color4), transparent 95%) 40%, transparent);
+
+    /* status indicator colors */
+    --online: var(--color2); /* Green slot */
+    --dnd: var(--color1); /* Red slot */
+    --idle: var(--color3); /* Yellow slot */
+    --streaming: var(--color5); /* Magenta slot */
+    --offline: var(--color8); /* Gray slot */
+
+    /* border colors */
+    --border-light: var(--color8);
+    --border: var(--bg-3);
+    --border-hover: var(--color4);
+    --button-border: hsla(0, 0%, 100%, 0.1);
+
+    /* Base Theme Colors (Mapped to Pywal Slots) */
+    /* Slot 1 */
+    --red-1: var(--color9);
+    --red-2: var(--color1);
+    --red-3: var(--color1);
+    --red-4: color-mix(in srgb, var(--color1), black 20%);
+    --red-5: color-mix(in srgb, var(--color1), black 40%);
+
+    /* Slot 2 */
+    --green-1: var(--color10);
+    --green-2: var(--color2);
+    --green-3: var(--color2);
+    --green-4: color-mix(in srgb, var(--color2), black 20%);
+    --green-5: color-mix(in srgb, var(--color2), black 40%);
+
+    /* Slot 4 */
+    --blue-1: var(--color12);
+    --blue-2: var(--color4);
+    --blue-3: var(--color4);
+    --blue-4: color-mix(in srgb, var(--color4), black 20%);
+    --blue-5: color-mix(in srgb, var(--color4), black 40%);
+
+    /* Slot 3 */
+    --yellow-1: var(--color11);
+    --yellow-2: var(--color3);
+    --yellow-3: var(--color3);
+    --yellow-4: color-mix(in srgb, var(--color3), black 20%);
+    --yellow-5: color-mix(in srgb, var(--color3), black 40%);
+
+    /* Slot 5 */
+    --purple-1: var(--color13);
+    --purple-2: var(--color5);
+    --purple-3: var(--color5);
+    --purple-4: color-mix(in srgb, var(--color5), black 20%);
+    --purple-5: color-mix(in srgb, var(--color5), black 40%);
+}
