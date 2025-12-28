@@ -1,25 +1,25 @@
 :root {
 
     /* Color Palette made with paywall a current wallpaper*/
-    --color0: #19130b;
-    --color1: #534831;
-    --color2: #614C25;
-    --color3: #695531;
-    --color4: #343A44;
-    --color5: #685F4B;
-    --color6: #896432;
-    --color7: #c5c4c2;
-    --color8: #6e655a;
-    --color9: #534831;
-    --color10: #614C25;
-    --color11: #695531;
-    --color12: #343A44;
-    --color13: #685F4B;
-    --color14: #896432;
-    --color15: #c5c4c2;
-    --background: #19130bad;
-    --foreground: #c5c4c2;
-    --cursor: #c5c4c2;
+    --color0: #0f1a22;
+    --color1: #467992;
+    --color2: #38849B;
+    --color3: #3A8AA9;
+    --color4: #4894B1;
+    --color5: #6194A9;
+    --color6: #50A5C4;
+    --color7: #c3c5c7;
+    --color8: #5e6a73;
+    --color9: #467992;
+    --color10: #38849B;
+    --color11: #3A8AA9;
+    --color12: #4894B1;
+    --color13: #6194A9;
+    --color14: #50A5C4;
+    --color15: #c3c5c7;
+    --background: #0f1a22ad;
+    --foreground: #c3c5c7;
+    --cursor: #c3c5c7;
 }
 
 /* Global Styles */
@@ -48,7 +48,7 @@
     color: var(--foreground);
 }
 .home-widget .icon:hover {
-    color: var(--color6);
+    color: var(--color0);
 }
 .home-menu {
     background-color: var(--background); 
@@ -62,12 +62,12 @@
     font-weight: 600;
 }
 .home-menu .menu-item:hover {
-    background-color: var(--color9);
-    color: var(--color6);
+    background-color: var(--color2);
+    color: var(--color0);
 }
 .home-menu .separator {
     max-height: 1px;
-    background-color: var(--color8);
+    background-color: var(--color5);
 }
 
 
@@ -89,15 +89,15 @@
     border-radius: 6px;
 }
 .glazewm-workspaces .ws-btn:hover {
-    background-color: var(--color9);
+    background-color: var(--color2);
 }
 .glazewm-workspaces .ws-btn.populated {
-    background-color: var(--color11);
+    background-color: var(--color4);
 }
 .glazewm-workspaces .ws-btn.active_populated,
 .glazewm-workspaces .ws-btn.active_empty {
     color: transparent;
-    background-color: var(--color1);
+    background-color: var(--color3);
     width: 36px;
     max-width: 36px;
     height: 12px;
@@ -117,7 +117,7 @@
 }
 
 .taskbar-widget .app-container.foreground {
-    background-color: var(--color9);
+    background-color: var(--color3);
 } 
 
 /* Active window indicator */
@@ -184,7 +184,8 @@
 
 }
 .audio-menu .audio-container .device:hover {
-    background-color: var(--color9);
+    background-color: var(--color2);
+    color: var(--color0);
 }
 /* Toggle button for application volumes (if is enabled) */
 .audio-menu .toggle-apps {
@@ -200,7 +201,8 @@
     background-color: var(--background);
 }
 .audio-menu .toggle-apps:hover {
-    background-color: var(--color9);
+    color: var(--color0);
+    background-color: var(--color2);
 
 }
 /* Container for application volumes (if is enabled) */
@@ -223,7 +225,8 @@
     max-height: 40px;
 }
 .audio-menu .apps-container .app-volume .app-icon-container:hover {
-    background-color: var(--color9);
+    color: var(--color0);
+    background-color: var(--color2);
 } 
 
 /* Weather widget styles*/
@@ -233,7 +236,7 @@
     background-color: var(--background);
 }
 .weather-card-today {
-    border: 1px solid var(--color8);
+    border: 1px solid var(--color4);
     border-radius: 8px;
     background-color: var(--background);
 }
@@ -256,7 +259,7 @@
     padding: 5px 0;
 }
 .weather-card-day {
-    border: 1px solid var(--color8);
+    border: 1px solid var(--color4);
     border-radius: 8px;
     background-color: var(--background);
 }
@@ -276,7 +279,7 @@
 }
 
 .weather-card .hourly-container {
-    border: 1px solid var(--color8);
+    border: 1px solid var(--color4);
     background-color: var(--background);
     border-radius: 8px;
     min-height: 150px;
@@ -310,17 +313,18 @@
     width: 600px;
 }
 .wallpapers-gallery-buttons:hover {
-    background-color: var(--color9);
+    color: var(--color0);
+    background-color: var(--color2);
 }
 .wallpapers-gallery-image {
     border: 4px solid transparent;
     border-radius: 10px;
 }
 .wallpapers-gallery-image:hover {
-    border: 4px solid var(--color8);
+    border: 4px solid var(--color4);
 }
 .wallpapers-gallery-image.focused {
-    border: 4px solid var(--color5);
+    border: 4px solid var(--color3);
 }
 
 /*Clock widget styles*/
@@ -339,7 +343,7 @@
 }
 .calendar .calendar-table::item:selected {
     color: var(--color0);
-    background-color: var(--color9);
+    background-color: var(--color3);
     border-radius: 10px;
 }
 .calendar .day-label {

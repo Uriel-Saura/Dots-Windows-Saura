@@ -13,6 +13,12 @@ from pathlib import Path
 
 # Ruta del archivo CSS
 CSS_FILE = Path(__file__).parent / "styles.css"
+# Ruta del tema de Vencord
+VENCORD_THEME_FILE = Path(r"c:\Users\uriel\AppData\Roaming\Vencord\themes\midnight-paywall.theme.css")
+# Ruta del tema de Firefox
+FIREFOX_CSS_FILE = Path(r"c:\Users\uriel\AppData\Roaming\Mozilla\Firefox\Profiles\ui3arn7s.default-release\chrome\userChrome.css")
+# Ruta del settings.json de Windows Terminal
+WINDOWS_TERMINAL_SETTINGS = Path(r"c:\Users\uriel\.config\WindowsTerminal\settings.json")
 
 def get_wallpaper_path():
     """Obtiene la ruta del wallpaper actual o solicita una."""
@@ -60,8 +66,135 @@ def load_wal_colors():
     with open(colors_file, 'r') as f:
         return json.load(f)
 
+def update_file_colors(file_path, color_mapping):
+    """Actualiza un archivo CSS con los nuevos colores."""
+    if not file_path.exists():
+        print(f"Advertencia: No se encontró el archivo: {file_path}")
+        return
+
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Reemplazar cada variable de color
+        updated = False
+        for var_name, new_color in color_mapping.items():
+            # Patrón para encontrar la declaración de la variable
+            pattern = rf"({re.escape(var_name)}:\s*)#[0-9a-fA-F]{{6}}"
+            replacement = rf"\g<1>{new_color}"
+            new_content = re.sub(pattern, replacement, content)
+            if new_content != content:
+                content = new_content
+                updated = True
+        
+        if updated:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print(f"✓ Actualizado: {file_path}")
+        else:
+            print(f"ℹ Sin cambios necesarios en: {file_path}")
+            
+    except Exception as e:
+        print(f"Error actualizando {file_path}: {e}")
+
+def read_css_variables(css_file_path):
+    """Lee las variables CSS de un archivo y las extrae."""
+    variables = {}
+    
+    if not css_file_path.exists():
+        print(f"Error: No se encontró el archivo: {css_file_path}")
+        return variables
+    
+    try:
+        with open(css_file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Buscar todas las variables CSS en formato --nombre: #color;
+        pattern = r'--(color\d+|background|foreground|cursor):\s*(#[0-9a-fA-F]{6})'
+        matches = re.findall(pattern, content)
+        
+        for var_name, color_value in matches:
+            variables[var_name] = color_value
+        
+        return variables
+    
+    except Exception as e:
+        print(f"Error leyendo {css_file_path}: {e}")
+        return variables
+
+def update_windows_terminal_scheme(variables):
+    """Actualiza el esquema 'Custom Warm' en settings.json de Windows Terminal."""
+    
+    if not WINDOWS_TERMINAL_SETTINGS.exists():
+        print(f"Advertencia: No se encontró settings.json de Windows Terminal en {WINDOWS_TERMINAL_SETTINGS}")
+        return
+    
+    # Mapeo de variables CSS a propiedades de Windows Terminal
+    color_map = {
+        'color0': 'black',
+        'color1': 'red',
+        'color2': 'green',
+        'color3': 'yellow',
+        'color4': 'blue',
+        'color5': 'purple',
+        'color6': 'cyan',
+        'color7': 'white',
+        'color8': 'brightBlack',
+        'color9': 'brightRed',
+        'color10': 'brightGreen',
+        'color11': 'brightYellow',
+        'color12': 'brightBlue',
+        'color13': 'brightPurple',
+        'color14': 'brightCyan',
+        'color15': 'brightWhite',
+        'background': 'background',
+        'foreground': 'foreground',
+        'cursor': 'cursorColor'
+    }
+    
+    try:
+        # Leer el archivo settings.json
+        with open(WINDOWS_TERMINAL_SETTINGS, 'r', encoding='utf-8') as f:
+            settings = json.load(f)
+        
+        # Buscar el esquema "Custom Warm"
+        schemes = settings.get('schemes', [])
+        custom_warm_idx = None
+        
+        for idx, scheme in enumerate(schemes):
+            if scheme.get('name') == 'Custom Warm':
+                custom_warm_idx = idx
+                break
+        
+        if custom_warm_idx is None:
+            print("Advertencia: No se encontró el esquema 'Custom Warm' en settings.json")
+            return
+        
+        # Actualizar los colores del esquema
+        for css_var, wt_prop in color_map.items():
+            if css_var in variables:
+                # Manejar background con transparencia - remover el sufijo 'ad'
+                color_value = variables[css_var]
+                if css_var == 'background' and len(color_value) == 9:
+                    color_value = color_value[:7]  # Tomar solo los primeros 7 caracteres (#RRGGBB)
+                
+                schemes[custom_warm_idx][wt_prop] = color_value.upper()
+        
+        # También actualizar selectionBackground con color8
+        if 'color8' in variables:
+            schemes[custom_warm_idx]['selectionBackground'] = variables['color8'].upper()
+        
+        # Guardar el archivo actualizado
+        with open(WINDOWS_TERMINAL_SETTINGS, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, indent=4)
+        
+        print(f"✓ Actualizado esquema 'Custom Warm' en Windows Terminal")
+        
+    except Exception as e:
+        print(f"Error actualizando Windows Terminal: {e}")
+
 def update_css(colors_data):
-    """Actualiza el archivo CSS con los nuevos colores."""
+    """Actualiza los archivos CSS con los nuevos colores."""
     
     # Extraer los 16 colores (color0-color15)
     colors = colors_data.get("colors", {})
@@ -81,26 +214,27 @@ def update_css(colors_data):
     color_mapping["--foreground"] = special.get("foreground", "#ffffff")
     color_mapping["--cursor"] = special.get("cursor", "#ffffff")
     
-    # Leer el archivo CSS
-    if not CSS_FILE.exists():
-        print(f"Error: No se encontró el archivo CSS: {CSS_FILE}")
-        sys.exit(1)
+    print("\nAplicando colores a los archivos...")
     
-    with open(CSS_FILE, 'r', encoding='utf-8') as f:
-        css_content = f.read()
+    # Actualizar styles.css local
+    update_file_colors(CSS_FILE, color_mapping)
     
-    # Reemplazar cada variable de color
-    for var_name, new_color in color_mapping.items():
-        # Patrón para encontrar la declaración de la variable
-        pattern = rf"({re.escape(var_name)}:\s*)#[0-9a-fA-F]{{6}}"
-        replacement = rf"\g<1>{new_color}"
-        css_content = re.sub(pattern, replacement, css_content)
+    # Actualizar tema de Vencord
+    update_file_colors(VENCORD_THEME_FILE, color_mapping)
+
+    # Actualizar tema de Firefox
+    update_file_colors(FIREFOX_CSS_FILE, color_mapping)
     
-    # Guardar el archivo CSS actualizado
-    with open(CSS_FILE, 'w', encoding='utf-8') as f:
-        f.write(css_content)
+    # Actualizar Windows Terminal
+    # Convertir el mapeo de colores al formato que espera la función
+    css_variables = {}
+    for var_name, color in color_mapping.items():
+        # Remover el prefijo '--' de las variables
+        clean_name = var_name.replace('--', '')
+        css_variables[clean_name] = color
     
-    print("✓ Archivo CSS actualizado correctamente!")
+    update_windows_terminal_scheme(css_variables)
+    
     print("\nColores aplicados:")
     for var_name, color in color_mapping.items():
         print(f"  {var_name}: {color}")
@@ -151,5 +285,34 @@ def main():
     
     print("\n¡Listo! Reinicia YASB para ver los cambios.")
 
+def update_windows_terminal_from_css():
+    """Lee las variables CSS de styles.css y actualiza Windows Terminal."""
+    print("="*60)
+    print("  Actualizador de Windows Terminal desde styles.css")
+    print("="*60 + "\n")
+    
+    # Leer variables CSS
+    print(f"Leyendo variables desde: {CSS_FILE}")
+    variables = read_css_variables(CSS_FILE)
+    
+    if not variables:
+        print("Error: No se encontraron variables CSS válidas.")
+        return
+    
+    print(f"\nVariables encontradas: {len(variables)}")
+    for var_name, color in sorted(variables.items()):
+        print(f"  --{var_name}: {color}")
+    
+    # Actualizar Windows Terminal
+    print("\nActualizando Windows Terminal...")
+    update_windows_terminal_scheme(variables)
+    
+    print("\n¡Listo! Los cambios se han aplicado a Windows Terminal.")
+    print("Puede que necesites reiniciar Windows Terminal para ver los cambios.")
+
 if __name__ == "__main__":
-    main()
+    # Si se pasa el argumento --wt, solo actualiza Windows Terminal
+    if len(sys.argv) > 1 and sys.argv[1] == "--wt":
+        update_windows_terminal_from_css()
+    else:
+        main()
