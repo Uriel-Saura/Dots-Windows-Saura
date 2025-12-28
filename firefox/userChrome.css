@@ -1,0 +1,502 @@
+:root {
+    /* Color Palette made with paywall a current wallpaper*/
+    --color0: #140f23;
+    --color1: #605E9B;
+    --color2: #A970AF;
+    --color3: #6B96C4;
+    --color4: #B3AFBF;
+    --color5: #E1A1AD;
+    --color6: #A5A2D8;
+    --color7: #c4c3c8;
+    --color8: #635e74;
+    --color9: #605E9B;
+    --color10: #A970AF;
+    --color11: #6B96C4;
+    --color12: #B3AFBF;
+    --color13: #E1A1AD;
+    --color14: #A5A2D8;
+    --color15: #c4c3c8;
+    
+    /* Transparency Control */
+    --opacity-percent: 95%; /* EDITAR AQUI: Porcentaje de opacidad (0% - 100%) */
+
+    /* Design Variables */
+    --background: color-mix(in srgb, #0d151e var(--opacity-percent), transparent);
+    --foreground: #c4c3c8;
+    --cursor: #c4c3c8;
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 12px;
+    --border-color: var(--color2);
+    --hover-bg: color-mix(in srgb, var(--color2) var(--opacity-percent), transparent);
+    --selected-bg: color-mix(in srgb, var(--color3) var(--opacity-percent), transparent);
+    --input-bg: color-mix(in srgb, var(--color1) var(--opacity-percent), transparent);
+}
+
+/* ============================================ */
+/*              MAIN WINDOW & LAYOUT            */
+/* ============================================ */
+
+#main-window,
+#browser,
+#navigator-toolbox {
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+}
+
+/* Remove default borders for a cleaner look */
+#navigator-toolbox {
+    border-bottom: none !important;
+}
+
+/* ============================================ */
+/*                  TABS BAR                    */
+/* ============================================ */
+
+#TabsToolbar {
+    background-color: var(--background) !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+
+/* Center Tabs and New Tab Button */
+#tabbrowser-tabs {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.tabbrowser-arrowscrollbox {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.tabbrowser-tab {
+    padding-inline: 2px !important;
+    padding: 2px;
+}
+
+.tab-background {
+    border-radius: var(--border-radius-medium) !important;
+    background-color: transparent !important;
+    border: none !important;
+    margin-block: 2px !important;
+    box-shadow: none !important;
+    transition: background-color 0.2s ease !important;
+}
+
+/* Hover State */
+.tabbrowser-tab:hover > .tab-stack > .tab-background {
+    background-color: var(--hover-bg) !important;
+}
+
+/* Selected State */
+.tabbrowser-tab[selected="true"] > .tab-stack > .tab-background {
+    background-color: var(--selected-bg) !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2) !important;
+}
+
+/* Remove the blue line on top of active tab */
+.tab-line {
+    display: none !important;
+}
+
+/* Tab Text */
+.tab-label {
+    color: var(--foreground) !important;
+    font-weight: 500 !important;
+}
+
+.tabbrowser-tab[selected="true"] .tab-label {
+    font-weight: bold !important;
+    color: #fff !important;
+}
+
+/* Secondary label (playing, muted, etc) */
+.tab-secondary-label {
+    color: var(--color6) !important;
+}
+
+/* Tab Icons */
+.tab-icon-image {
+    filter: brightness(1.1) !important;
+}
+
+/* ============================================ */
+/*               NAVIGATION BAR                 */
+/* ============================================ */
+
+#nav-bar {
+    background-color: var(--background) !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    padding: 4px 8px !important;
+}
+
+/* URL Bar Container */
+#urlbar {
+    --urlbar-height: 36px !important;
+    --urlbar-toolbar-height: 40px !important;
+    border-radius: var(--border-radius-large) !important;
+    background-color: transparent !important;
+}
+
+/* URL Bar Background */
+#urlbar-background {
+    background-color: var(--input-bg) !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--border-radius-large) !important;
+    box-shadow: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* URL Bar Focus */
+#urlbar[focused="true"] > #urlbar-background {
+    background-color: var(--color0) !important;
+    border-color: var(--color5) !important;
+    box-shadow: 0 0 0 2px rgba(117, 138, 148, 0.3) !important;
+}
+
+/* URL Bar Text */
+#urlbar-input {
+    color: var(--foreground) !important;
+    text-align: center !important;
+}
+
+#urlbar-input::placeholder {
+    color: var(--color5) !important;
+}
+
+/* URL Bar Icons */
+#identity-box {
+    margin-inline-end: 8px !important;
+}
+
+#identity-icon-box {
+    background-color: transparent !important;
+}
+
+/* ============================================ */
+/*               TOOLBAR BUTTONS                */
+/* ============================================ */
+
+.toolbarbutton-1 {
+    fill: var(--foreground) !important;
+    border-radius: var(--border-radius-medium) !important;
+    margin: 0 2px !important;
+    padding: 4px !important;
+    appearance: none !important; /* Remove native styling */
+    background: none !important; /* Ensure no default background */
+    border: none !important;
+}
+
+/* Prevent double hover on icons/badges */
+.toolbarbutton-1 > .toolbarbutton-icon,
+.toolbarbutton-1 > .toolbarbutton-badge-stack,
+.toolbarbutton-1 > .toolbarbutton-text {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Back/Forward Buttons */
+#back-button, #forward-button {
+    padding: 6px !important;
+}
+
+/* ============================================ */
+/*               BOOKMARKS BAR                  */
+/* ============================================ */
+
+#PersonalToolbar {
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+    padding: 6px 10px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+toolbarbutton.bookmark-item {
+    padding: 4px 8px !important;
+    border-radius: var(--border-radius-small) !important;
+    color: var(--foreground) !important;
+}
+
+toolbarbutton.bookmark-item:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+/* ============================================ */
+/*               SIDEBAR & PANELS               */
+/* ============================================ */
+
+#sidebar-box {
+    background-color: var(--background) !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
+#sidebar-header {
+    background-color: var(--background) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    font-weight: bold !important;
+    padding: 8px !important;
+}
+
+/* Popups / Menus / Dropdowns */
+menupopup, panel {
+    --panel-background: color-mix(in srgb, var(--color1) var(--opacity-percent), transparent) !important;
+    --panel-border-color: var(--color3) !important;
+}
+
+.panel-arrowcontent,
+#appMenu-popup menupopup,
+.menupopup-arrowscrollbox {
+    background-color: var(--panel-background) !important;
+    border: 1px solid var(--color3) !important;
+    border-radius: var(--border-radius-medium) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    color: var(--foreground) !important;
+}
+
+menuitem, menu {
+    border-radius: var(--border-radius-small) !important;
+    margin: 2px 4px !important;
+    padding-block: 6px !important;
+    color: var(--foreground) !important;
+}
+
+menuitem:hover, menu:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+/* ============================================ */
+/*               NEW TAB BUTTON                 */
+/* ============================================ */
+
+#tabs-newtab-button,
+.tabs-newtab-button {
+    display: flex !important;
+    justify-content: center;
+    align-items: center !important;
+    width: 100% !important; /* Ensure full width in vertical layouts */
+    min-height: 32px !important;
+
+}
+
+#new-tab-button,
+.new-tab-button {
+    display: flex !important;
+    justify-content: center;
+    align-items: center !important;
+    width: 100% !important; /* Ensure full width in vertical layouts */
+    min-height: 32px !important;
+}
+
+
+
+/* ============================================ */
+/*               FIND BAR                       */
+/* ============================================ */
+
+findbar {
+    background-color: var(--color1) !important;
+    border-top: 1px solid var(--border-color) !important;
+    padding: 8px !important;
+    color: var(--foreground) !important;
+}
+
+.findbar-textbox {
+    background-color: var(--color0) !important;
+    border: 1px solid var(--color3) !important;
+    border-radius: var(--border-radius-small) !important;
+    color: var(--foreground) !important;
+}
+
+.findbar-button {
+    color: var(--foreground) !important;
+    border: 1px solid transparent !important;
+}
+
+.findbar-button:hover {
+    background-color: var(--hover-bg) !important;
+    border-radius: var(--border-radius-small) !important;
+}
+
+/* ============================================ */
+/*               SCROLLBARS                     */
+/* ============================================ */
+
+* {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--color3) var(--background) !important;
+}
+
+/* ============================================ */
+/*               OTHER ELEMENTS                 */
+/* ============================================ */
+
+/* Status Panel (URL preview at bottom left) */
+#statuspanel-label {
+    background-color: var(--color1) !important;
+    border: 1px solid var(--color3) !important;
+    border-radius: var(--border-radius-small) !important;
+    color: var(--foreground) !important;
+    padding: 4px 8px !important;
+}
+
+/* Customization Page */
+#customization-container {
+    background-color: var(--background) !important;
+}
+
+/* Dialogs */
+dialog {
+    background-color: var(--color1) !important;
+    color: var(--foreground) !important;
+}
+
+/* Inputs generic */
+input:not(.urlbar-input), 
+textarea, 
+select {
+    background-color: var(--color0) !important;
+    border: 1px solid var(--color3) !important;
+    border-radius: var(--border-radius-small) !important;
+    color: var(--foreground) !important;
+    padding: 4px !important;
+}
+
+input:focus, 
+textarea:focus, 
+select:focus {
+    border-color: var(--color5) !important;
+    outline: none !important;
+}
+
+/* Context Menu Separators */
+menuseparator {
+    border-top: 1px solid var(--color3) !important;
+    margin: 4px 8px !important;
+}
+
+/* Autocomplete Popup */
+#PopupAutoComplete,
+.autocomplete-richlistbox {
+    background-color: var(--color1) !important;
+    border: 1px solid var(--color3) !important;
+    border-radius: var(--border-radius-medium) !important;
+}
+
+.autocomplete-richlistitem {
+    color: var(--foreground) !important;
+}
+
+.autocomplete-richlistitem:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+.autocomplete-richlistitem[selected] {
+    background-color: var(--selected-bg) !important;
+}
+
+/* Window Controls (Min/Max/Close) */
+.titlebar-button {
+    padding: 8px 16px !important;
+}
+
+.titlebar-button:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+.titlebar-close:hover {
+    background-color: #e81123 !important;
+}
+
+/* ============================================ */
+/*         GLOBAL HOVER & MENU STYLES           */
+/* ============================================ */
+
+/* Universal Menu/Panel Styling */
+menupopup, 
+panel, 
+.panel-arrowcontent, 
+.menupopup-arrowscrollbox,
+#appMenu-popup,
+#customizationui-widget-panel,
+#unified-extensions-panel,
+#widget-overflow-mainView,
+#widget-overflow-fixed-list {
+    appearance: none !important;
+    background-color: var(--panel-background) !important;
+    border: 1px solid var(--color3) !important;
+    color: var(--foreground) !important;
+}
+
+/* Menu Items & Buttons */
+menuitem, 
+menu, 
+.subviewbutton, 
+.toolbarbutton-1, 
+.bookmark-item,
+.protections-popup-footer-button,
+.identity-popup-security-button {
+    color: var(--foreground) !important;
+    transition: background-color 0.1s ease !important;
+}
+
+/* Hover States for All Interactive Elements */
+menuitem:not([disabled="true"]):hover, 
+menu:not([disabled="true"]):hover, 
+.subviewbutton:not([disabled="true"]):hover, 
+.toolbarbutton-1:not([disabled="true"]):hover, 
+.bookmark-item:not([disabled="true"]):hover,
+.protections-popup-footer-button:not([disabled="true"]):hover,
+.identity-popup-security-button:not([disabled="true"]):hover,
+.download-state:hover,
+.sidebar-placesTree treechildren::-moz-tree-row(hover) {
+    background-color: var(--hover-bg) !important;
+    color: #fff !important; /* Highlight text on hover */
+}
+
+/* Fix for double hover on specific buttons like Reload/Stop */
+#reload-button:hover, #stop-button:hover, #back-button:hover, #forward-button:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+#reload-button > .toolbarbutton-icon, 
+#stop-button > .toolbarbutton-icon {
+    background-color: transparent !important;
+}
+
+/* Active/Selected States */
+menuitem[_moz-menuactive="true"], 
+menu[_moz-menuactive="true"],
+.subviewbutton[active="true"],
+.subviewbutton:active,
+.toolbarbutton-1:active,
+.sidebar-placesTree treechildren::-moz-tree-row(selected) {
+    background-color: var(--selected-bg) !important;
+    color: #fff !important;
+}
+
+/* Icons in Menus */
+.menu-iconic-left, 
+.menu-iconic-icon,
+.subviewbutton-iconic > .toolbarbutton-icon {
+    fill: var(--foreground) !important;
+    -moz-context-properties: fill, fill-opacity, stroke !important;
+}
+
+/* Sidebar & Library */
+#sidebar-box, 
+.sidebar-placesTree, 
+#placesList, 
+#placeContent {
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+}
+
+/* Tree/List Items */
+treechildren {
+    background-color: transparent !important;
+    color: var(--foreground) !important;
+}
+
