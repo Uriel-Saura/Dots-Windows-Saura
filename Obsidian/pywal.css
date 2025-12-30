@@ -1,0 +1,359 @@
+/* Pywal Theme for Obsidian
+ * Generated from pywal colors
+ * Wallpaper: wallhaven-1qqpm9_2560x1440.png
+ */
+
+.theme-dark {
+    /* === Pywal Color Palette === */
+    --color0: #140f23;   /* background */
+    --color1: #605E9B;
+    --color2: #A970AF;
+    --color3: #6B96C4;
+    --color4: #B3AFBF;
+    --color5: #E1A1AD;
+    --color6: #A5A2D8;
+    --color7: #c4c3c8;   /* foreground */
+    --color8: #635e74;   /* bright black */
+    --color9: #605E9B;
+    --color10: #A970AF;
+    --color11: #6B96C4;
+    --color12: #B3AFBF;
+    --color13: #E1A1AD;
+    --color14: #A5A2D8;
+    --color15: #c4c3c8;
+    
+    /* === Background Colors === */
+    --background-primary: var(--color0);
+    --background-primary-alt: var(--color0);
+    --background-secondary: var(--color0);
+    --background-secondary-alt: var(--color0);
+    --background-modifier-border: var(--color8);
+    --background-modifier-form-field: var(--color8);
+    --background-modifier-form-field-highlighted: var(--color9);
+    --background-modifier-box-shadow: var(--color0);
+    --background-modifier-success: var(--color10);
+    --background-modifier-error: var(--color9);
+    --background-modifier-error-hover: var(--color1);
+    --background-modifier-cover: var(--color0);
+    
+    /* === Text Colors === */
+    --text-normal: var(--color15);
+    --text-muted: var(--color8);
+    --text-faint: var(--color8);
+    --text-accent: var(--color14);
+    --text-accent-hover: var(--color13);
+    --text-error: var(--color9);
+    --text-error-hover: var(--color1);
+    --text-highlight-bg: var(--color14);
+    --text-selection: var(--color14);
+    
+    /* === Interactive Colors === */
+    --interactive-normal: var(--color8);
+    --interactive-hover: var(--color12);
+    --interactive-accent: var(--color14);
+    --interactive-accent-hover: var(--color13);
+    --interactive-success: var(--color10);
+    
+    /* === Scrollbar === */
+    --scrollbar-bg: var(--background-primary);
+    --scrollbar-thumb-bg: var(--color8);
+    --scrollbar-active-thumb-bg: var(--color12);
+    
+    /* === Dividers === */
+    --divider-color: var(--color8);
+    
+    /* === Links === */
+    --link-color: var(--color11);
+    --link-color-hover: var(--color13);
+    --link-external-color: var(--color10);
+    --link-unresolved-color: var(--color9);
+    
+    /* === Code Blocks === */
+    --code-normal: var(--color11);
+    --code-background: var(--color0);
+    --code-comment: var(--color8);
+    --code-function: var(--color14);
+    --code-important: var(--color13);
+    --code-keyword: var(--color10);
+    --code-operator: var(--color12);
+    --code-property: var(--color11);
+    --code-punctuation: var(--color15);
+    --code-string: var(--color10);
+    --code-tag: var(--color9);
+    --code-value: var(--color11);
+    
+    /* === Tags === */
+    --tag-color: var(--color11);
+    --tag-background: var(--color11);
+    --tag-color-hover: var(--color13);
+    --tag-background-hover: var(--color13);
+    
+    /* === Headings === */
+    --h1-color: var(--color13);
+    --h2-color: var(--color14);
+    --h3-color: var(--color11);
+    --h4-color: var(--color10);
+    --h5-color: var(--color12);
+    --h6-color: var(--color15);
+    
+    /* === Lists === */
+    --list-marker-color: var(--color14);
+    --list-marker-color-collapsed: var(--color8);
+    
+    /* === Tables === */
+    --table-header-bg: var(--background-secondary);
+    --table-row-even-bg: var(--color8);
+    --table-row-odd-bg: var(--background-primary);
+    --table-row-hover-bg: var(--color14);
+    
+    /* === Checkbox === */
+    --checkbox-color: var(--color14);
+    --checkbox-color-hover: var(--color13);
+    --checkbox-border-color: var(--color8);
+    
+    /* === Graph View === */
+    --graph-line: var(--color8);
+    --graph-node: var(--color14);
+    --graph-node-focused: var(--color13);
+    --graph-node-tag: var(--color11);
+    --graph-node-attachment: var(--color10);
+}
+
+/* === Typography === */
+body {
+    --font-text: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --font-monospace: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+/* === Blur Effects === */
+.workspace-leaf-content,
+.workspace-split.mod-root,
+.workspace-tabs,
+.view-content {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* === Headings Styling === */
+.markdown-preview-view h1,
+.cm-header-1 {
+    color: var(--h1-color);
+    font-weight: 700;
+}
+
+.markdown-preview-view h2,
+.cm-header-2 {
+    color: var(--h2-color);
+    font-weight: 600;
+}
+
+.markdown-preview-view h3,
+.cm-header-3 {
+    color: var(--h3-color);
+    font-weight: 600;
+}
+
+.markdown-preview-view h4,
+.cm-header-4 {
+    color: var(--h4-color);
+    font-weight: 500;
+}
+
+.markdown-preview-view h5,
+.cm-header-5 {
+    color: var(--h5-color);
+    font-weight: 500;
+}
+
+.markdown-preview-view h6,
+.cm-header-6 {
+    color: var(--h6-color);
+    font-weight: 500;
+}
+
+/* === Links === */
+a,
+.internal-link {
+    color: var(--link-color);
+}
+
+a:hover,
+.internal-link:hover {
+    color: var(--link-color-hover);
+}
+
+.external-link {
+    color: var(--link-external-color);
+}
+
+/* === Code Blocks === */
+code {
+    color: var(--code-normal);
+    background-color: var(--code-background);
+    padding: 2px 4px;
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+pre code {
+    padding: 1em;
+    display: block;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* === Tags === */
+.tag {
+    background-color: var(--tag-background);
+    color: var(--tag-color);
+    border-radius: 12px;
+    padding: 2px 8px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.tag:hover {
+    background-color: var(--tag-background-hover);
+    color: var(--tag-color-hover);
+}
+
+/* === Checkboxes === */
+input[type="checkbox"] {
+    border-color: var(--checkbox-border-color);
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+}
+
+/* === Selection === */
+::selection {
+    background-color: var(--text-selection);
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-bg);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-active-thumb-bg);
+}
+
+/* === Workspace Leaves === */
+.workspace-leaf-content[data-type="search"] .search-result-file-title,
+.workspace-leaf-content[data-type="backlink"] .tree-item-self {
+    color: var(--text-accent);
+}
+
+/* === File Explorer === */
+.nav-file-title,
+.nav-folder-title {
+    color: var(--text-normal);
+}
+
+.nav-file-title:hover,
+.nav-folder-title:hover {
+    color: var(--text-accent-hover);
+    background-color: var(--background-modifier-form-field);
+}
+
+.nav-file-title.is-active {
+    color: var(--text-accent);
+    background-color: var(--background-modifier-form-field-highlighted);
+}
+
+/* === Tables === */
+table {
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: var(--table-header-bg);
+}
+
+tr:nth-child(even) {
+    background-color: var(--table-row-even-bg);
+}
+
+tr:nth-child(odd) {
+    background-color: var(--table-row-odd-bg);
+}
+
+tr:hover {
+    background-color: var(--table-row-hover-bg);
+}
+
+/* === Blockquotes === */
+blockquote {
+    border-left: 3px solid var(--color14);
+    background-color: var(--color0);
+    padding: 10px 15px;
+    margin: 10px 0;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* === Horizontal Rules === */
+hr {
+    border-color: var(--divider-color);
+}
+
+/* === Buttons === */
+button {
+    background-color: var(--interactive-accent);
+    color: var(--text-normal);
+}
+
+button:hover {
+    background-color: var(--interactive-accent-hover);
+}
+
+/* === Modal === */
+.modal {
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.modal-container {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+/* === Sidebar === */
+.side-dock-ribbon {
+    background-color: var(--background-secondary);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.side-dock-ribbon-tab {
+    color: var(--text-muted);
+}
+
+.side-dock-ribbon-tab:hover {
+    color: var(--text-accent);
+}
+
+.side-dock-ribbon-tab.is-active {
+    color: var(--text-accent);
+}
