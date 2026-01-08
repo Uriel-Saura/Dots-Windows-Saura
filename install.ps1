@@ -14,7 +14,8 @@
 param(
     [switch]$SkipInstall,      # Saltar instalación de aplicaciones
     [switch]$Force,            # Forzar sobrescritura de archivos existentes
-    [switch]$CheckOnly         # Solo verificar el estado actual
+    [switch]$CheckOnly,        # Solo verificar el estado actual
+    [switch]$Uninstall         # Desinstalar todo
 )
 
 # Configuración
@@ -74,6 +75,12 @@ function Install-Scoop {
 function Install-WingetPackages {
     Write-Step "Verificando e instalando aplicaciones vía Winget..."
     
+    if (-not (Test-CommandExists "winget")) {
+        Write-Warning "Winget no está disponible en este sistema"
+        Write-Info "Instala Winget desde Microsoft Store o continúa con Scoop"
+        return
+    }
+    
     $wingetApps = @(
         @{Name="Git.Git"; Display="Git"},
         @{Name="Python.Python.3.12"; Display="Python 3.12"},
@@ -83,18 +90,32 @@ function Install-WingetPackages {
     )
     
     foreach ($app in $wingetApps) {
-        if (Test-CommandExists "winget") {
-            $installed = winget list --id $app.Name 2>&1 | Select-String $app.Name
-            if (-not $installed) {
-                Write-Step "Instalando $($app.Display)..."
-                winget install -e --id $app.Name --silent --accept-package-agreements --accept-source-agreements
-            } else {
-                Write-Success "$($app.Display) ya está instalado"
+        Write-Step "Verificando $($app.Display)..."
+        
+        # Verificar si ya está instalado
+        $installed = winget list --id $app.Name 2>&1 | Select-String $app.Name
+        
+        if (-not $installed) {
+            Write-Info "→ Instalando $($app.Display) vía Winget..."
+            
+            try {
+                $result = winget install -e --id $app.Name --silent --accept-package-agreements --accept-source-agreements 2>&1
+                
+                # Verificar el resultado
+                if ($LASTEXITCODE -eq 0 -or $result -like "*Successfully installed*") {
+                    Write-Success "$($app.Display) instalado correctamente"
+                } else {
+                    Write-Warning "$($app.Display) - Instalación completada con advertencias"
+                }
+            } catch {
+                Write-Warning "Error al instalar $($app.Display): $_"
             }
         } else {
-            Write-Warning "Winget no disponible, salta $($app.Display)"
+            Write-Success "$($app.Display) ya está instalado"
         }
     }
+    
+    Write-Success "Instalación vía Winget completada"
 }
 
 # Instalar aplicaciones vía Scoop
@@ -383,6 +404,159 @@ function Show-Status {
     Write-Host ""
 }
 
+# Desinstalar todo
+function Uninstall-All {
+    Write-Host @"
+╔════════════════════════════════════════════╗
+║  DESINSTALACIÓN COMPLETA                  ║
+║  ⚠ Esta acción eliminará aplicaciones    ║
+╚════════════════════════════════════════════╝
+"@ -ForegroundColor Red
+    
+    Write-Host ""
+    $confirm = Read-Host "¿Estás seguro de desinstalar todo? (escribe 'SI' para confirmar)"
+    
+    if ($confirm -ne "SI") {
+        Write-Info "Desinstalación cancelada"
+        return
+    }
+    
+    Write-Host "`n[1/5] Eliminando configuraciones..." -ForegroundColor Yellow
+    
+    # Lista de archivos de configuración a eliminar
+    $configFiles = @(
+        "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json",
+        $PROFILE.CurrentUserAllHosts,
+        "$env:USERPROFILE\.config\WindowsTerminal\pure.omp.json",
+        "$env:LOCALAPPDATA\fastfetch\config.jsonc",
+        "$env:LOCALAPPDATA\fastfetch\ascii.txt",
+        "$env:USERPROFILE\.yasb\config.yaml",
+        "$env:USERPROFILE\.yasb\styles.css",
+        "$env:USERPROFILE\.yasb\update_colors.py"
+    )
+    
+    foreach ($file in $configFiles) {
+        if ($file -and (Test-Path $file)) {
+            try {
+                Remove-Item $file -Force -ErrorAction Stop
+                Write-Success "Eliminado: $file"
+            } catch {
+                Write-Warning "No se pudo eliminar: $file"
+            }
+        }
+    }
+    
+    # Directorios de configuración
+    $configDirs = @(
+        "$env:USERPROFILE\.yasb",
+        "$env:USERPROFILE\.cache\wal",
+        "$env:USERPROFILE\.config\wal",
+        "$env:LOCALAPPDATA\fastfetch"
+    )
+    
+    foreach ($dir in $configDirs) {
+        if (Test-Path $dir) {
+            try {
+                Remove-Item $dir -Recurse -Force -ErrorAction Stop
+                Write-Success "Directorio eliminado: $dir"
+            } catch {
+                Write-Warning "No se pudo eliminar: $dir"
+            }
+        }
+    }
+    
+    Write-Host "`n[2/5] Desinstalando paquetes Python..." -ForegroundColor Yellow
+    
+    if (Test-CommandExists "python") {
+        $pythonPackages = @("yasb", "pywal", "pillow", "PyYAML")
+        
+        foreach ($package in $pythonPackages) {
+            Write-Step "Desinstalando $package..."
+            python -m pip uninstall -y $package 2>&1 | Out-Null
+        }
+        
+        Write-Success "Paquetes Python desinstalados"
+    } else {
+        Write-Info "Python no encontrado, saltando"
+    }
+    
+    Write-Host "`n[3/5] Desinstalando aplicaciones Scoop..." -ForegroundColor Yellow
+    
+    if (Test-CommandExists "scoop") {
+        $scoopApps = @("oh-my-posh", "fastfetch", "gsudo", "FiraCode-NF")
+        
+        foreach ($app in $scoopApps) {
+            Write-Step "Desinstalando $app..."
+            scoop uninstall $app 2>&1 | Out-Null
+        }
+        
+        Write-Success "Aplicaciones Scoop desinstaladas"
+        
+        $removeScoopConfirm = Read-Host "`n¿Eliminar Scoop completamente? (S/N)"
+        if ($removeScoopConfirm -eq "S" -or $removeScoopConfirm -eq "s") {
+            Write-Step "Eliminando Scoop..."
+            scoop uninstall scoop
+            Remove-Item "$env:USERPROFILE\scoop" -Recurse -Force -ErrorAction SilentlyContinue
+            Write-Success "Scoop eliminado"
+        }
+    } else {
+        Write-Info "Scoop no encontrado, saltando"
+    }
+    
+    Write-Host "`n[4/5] Desinstalando aplicaciones Winget..." -ForegroundColor Yellow
+    
+    if (Test-CommandExists "winget") {
+        $wingetApps = @(
+            @{Name="Git.Git"; Display="Git"},
+            @{Name="Python.Python.3.12"; Display="Python 3.12"},
+            @{Name="Mozilla.Firefox"; Display="Firefox"},
+            @{Name="FlowLauncher.FlowLauncher"; Display="Flow Launcher"},
+            @{Name="Obsidian.Obsidian"; Display="Obsidian"}
+        )
+        
+        $uninstallConfirm = Read-Host "`n¿Desinstalar aplicaciones de Winget? (S/N)"
+        if ($uninstallConfirm -eq "S" -or $uninstallConfirm -eq "s") {
+            foreach ($app in $wingetApps) {
+                Write-Step "Desinstalando $($app.Display)..."
+                winget uninstall -e --id $app.Name --silent 2>&1 | Out-Null
+            }
+            Write-Success "Aplicaciones Winget desinstaladas"
+        } else {
+            Write-Info "Aplicaciones Winget conservadas"
+        }
+    } else {
+        Write-Info "Winget no encontrado, saltando"
+    }
+    
+    Write-Host "`n[5/5] Limpieza final..." -ForegroundColor Yellow
+    
+    # Limpiar variables de entorno del perfil
+    if (Test-Path $PROFILE.CurrentUserAllHosts) {
+        Write-Info "Perfil de PowerShell eliminado - Crea uno nuevo si es necesario"
+    }
+    
+    Write-Host ""
+    Write-Host @"
+╔════════════════════════════════════════════════════════════════╗
+║  DESINSTALACIÓN COMPLETADA                                    ║
+╚════════════════════════════════════════════════════════════════╝
+
+Se han eliminado:
+✓ Configuraciones
+✓ Paquetes Python
+✓ Enlaces simbólicos
+✓ Directorios de cache
+
+Notas:
+- Reinicia tu terminal para aplicar cambios
+- Algunas aplicaciones pueden requerir reinicio manual desde Windows
+- Los wallpapers en C:\Users\uriel\.config\Wallpapers NO fueron eliminados
+
+"@ -ForegroundColor Cyan
+    
+    Write-Success "¡Desinstalación completada!"
+}
+
 # Función principal
 function Main {
     Write-Host @"
@@ -391,6 +565,12 @@ function Main {
 ║  Windows Dotfiles Installer               ║
 ╚════════════════════════════════════════════╝
 "@ -ForegroundColor Cyan
+    
+    # Si es desinstalación
+    if ($Uninstall) {
+        Uninstall-All
+        return
+    }
     
     # Si es solo verificación
     if ($CheckOnly) {
