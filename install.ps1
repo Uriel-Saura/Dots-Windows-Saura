@@ -46,11 +46,22 @@ function Test-CommandExists {
 function Install-Scoop {
     if (-not (Test-CommandExists "scoop")) {
         Write-Step "Instalando Scoop package manager..."
+        
+        # Advertir si se ejecuta como admin
+        if (Test-Administrator) {
+            Write-Warning "Ejecutando como Administrador - Scoop puede fallar"
+            Write-Info "Si falla, cierra este terminal y ejecuta sin privilegios admin"
+        }
+        
         try {
-            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+            # Instalar Scoop sin interacción
+            irm get.scoop.sh -outfile 'install.ps1'
+            .\install.ps1 -RunAsAdmin
+            Remove-Item .\install.ps1
             Write-Success "Scoop instalado correctamente"
         } catch {
-            Write-Error "Error al instalar Scoop: $_"
+            Write-Warning "Error al instalar Scoop: $_"
+            Write-Info "Continúa sin Scoop - usa Winget para instalar aplicaciones"
             return $false
         }
     } else {
@@ -64,6 +75,7 @@ function Install-WingetPackages {
     Write-Step "Verificando e instalando aplicaciones vía Winget..."
     
     $wingetApps = @(
+        @{Name="Git.Git"; Display="Git"},
         @{Name="Python.Python.3.12"; Display="Python 3.12"},
         @{Name="Mozilla.Firefox"; Display="Firefox"},
         @{Name="FlowLauncher.FlowLauncher"; Display="Flow Launcher"},
@@ -399,9 +411,15 @@ function Main {
     # Instalar aplicaciones
     if (-not $SkipInstall) {
         Write-Host "`n[1/7] Instalación de dependencias" -ForegroundColor Yellow
+        
+        # Primero Winget (incluye Git)
+        Install-WingetPackages
+        
+        # Luego Scoop (puede fallar con admin)
         Install-Scoop
         Install-ScoopPackages
-        Install-WingetPackages
+        
+        # Finalmente paquetes Python
         Install-PythonPackages
     } else {
         Write-Info "Saltando instalación de aplicaciones (-SkipInstall)"
