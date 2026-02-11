@@ -8,6 +8,7 @@ try {
 
 Clear-Host
 oh-my-posh init powershell --config 'C:\Users\uriel\.config\WindowsTerminal\pure.omp.json' | Invoke-Expression
+Import-Module Terminal-Icons
 
 # Force Fastfetch to use YOUR config every time (bypass path confusion)
 if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
